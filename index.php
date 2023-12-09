@@ -1,3 +1,7 @@
+<?php
+require 'dbcon.php';
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -9,7 +13,7 @@
     <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <title>Welcome to DataBook</title>
+    <title>DataBook</title>
 </head>
 
 <body>
@@ -25,7 +29,7 @@
                     </div>
                     <div class="card-body">
 
-                        <div class="table">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ISBN</th>
@@ -33,9 +37,39 @@
                                     <th>Price</th>
                                     <th>Author</th>
                                     <th>publication Year</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                        </div>
+                            <tbody>
+                                <?php
+                                $query = "SELECT * FROM book";
+                                $query_run = mysqli_query($con, $query);
+
+                                if (mysqli_num_rows($query_run) > 0) {
+                                    foreach ($query_run as $book) {
+                                        // echo $book['title'];
+                                ?>
+                                        <tr>
+                                            <td><?= $book['ISBN']; ?></td>
+                                            <td><?= $book['title']; ?></td>
+                                            <td><?= $book['price']; ?></td>
+                                            <td><?= $book['author']; ?></td>
+                                            <td><?= $book['publication_year']; ?></td>
+                                            <td>
+                                                <a href="" class="btn btn-info btn-sm">View</a>
+                                                <a href="book-edit.php?id=<?= $book['ISBN']; ?>" class="btn btn-success btn-sm">Edit</a>
+                                                <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<h5> No Record Found </h5>";
+                                }
+                                ?>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
