@@ -41,6 +41,8 @@ require 'dbcon.php';
                                 $book = mysqli_fetch_array($query_run);
                         ?>
                                 <form action="code.php" method="POST">
+                                    <!-- Menggunakan input hidden untuk menyimpan nilai ISBN -->
+                                    <input type="hidden" name="ISBN" value="<?= $book['ISBN']; ?>">
 
                                     <div class="mb-3">
                                         <label>Title</label>
@@ -62,6 +64,7 @@ require 'dbcon.php';
                                         <button type="submit" name="update_book" class="btn btn-primary">Update Book</button>
                                     </div>
                                 </form>
+
                         <?php
                             } else {
                                 echo "<h4>Book not found</h4>";
