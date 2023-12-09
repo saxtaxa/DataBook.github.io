@@ -52,7 +52,7 @@ require 'dbcon.php';
                                 $query_run = mysqli_query($con, $query);
 
                                 if (mysqli_num_rows($query_run) > 0) {
-                                    foreach ($query_run as $book) {
+                                    while ($book = mysqli_fetch_assoc($query_run)) {
                                         // echo $book['title'];
                                 ?>
                                         <tr>
@@ -62,9 +62,12 @@ require 'dbcon.php';
                                             <td><?= $book['author']; ?></td>
                                             <td><?= $book['publication_year']; ?></td>
                                             <td>
-                                                <a href="" class="btn btn-info btn-sm">View</a>
+                                                <a href="book-view.php?id=<?= $book['ISBN']; ?>" class="btn btn-info btn-sm">View</a>
                                                 <a href="book-edit.php?id=<?= $book['ISBN']; ?>" class="btn btn-success btn-sm">Edit</a>
-                                                <a href="" class="btn btn-danger btn-sm">Delete</a>
+                                                <form action="code.php" method="POST" class="d-inline">
+                                                    <button type="submit" name="delete_book" value="<?= $book['ISBN']; ?>" class="btn btn-danger btn-sm">Delete</button>
+                                                </form>
+
                                             </td>
                                         </tr>
                                 <?php
